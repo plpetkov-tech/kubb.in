@@ -2,8 +2,8 @@
 
 :root {
     --modal-duration: 1s;
-    --primary-color: #30336b;
-    --secondary-color: #be2edd;
+    --primary-color: #defcf9;
+    --secondary-color: #42dbcc;
 }
 
 * {
@@ -24,7 +24,7 @@ body.show-nav{
 nav{
     background-color: var(--primary-color);
     border-right: 2px solid rgba(200, 200, 200, 0.1);
-    color: #fff;
+    color: #000;
     position: fixed;
     top:0;
     left:0;
@@ -68,7 +68,7 @@ nav ul li a:hover{
 
 header{
     background-color: var(--primary-color);
-    color: #fff;
+    color: #000;
     font-size: 130%;
     position: relative;
     padding: 40px 15px;
