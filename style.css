@@ -14,7 +14,7 @@ body {
     font-family: 'Lato', sans-serif;
     margin:0;
     transition: transform 0.3s ease;
-    overflow: hidden; /* Hide scrollbars */
+    overflow-x: hidden; /* Hide scrollbars */
 }
 
 body.show-nav{
