@@ -1,0 +1,9 @@
+[X] Setup the class
+[X] Setup the prod db
+[X] Setup the test db
+[ ] Server setup with CRUD methods
+[ ] Test prod server with postman
+[ ] Do the html page, can use a framework for that
+[ ] Implement the prod apis in the frontend
+[ ] Have a test endpoint and have a test version
+[X] Draw.io a representation of both environments
