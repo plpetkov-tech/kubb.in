@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
+	// here will be the logic in future versions for premium and basic users
 	@GetMapping("/all")
 	public String allAccess() {
 		return "Public Content.";
