@@ -1,0 +1,2 @@
+kubb.in-backend/test-env/mongo-volume/*
+kubb.in-backend/prod-env/mongo-volume/*
