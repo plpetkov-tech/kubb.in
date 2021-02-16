@@ -1,11 +1,10 @@
 package in.kubb.api.repositories;
 
 import in.kubb.api.models.Subscription;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface SubscriptionRepository {
 
     Subscription save(Subscription subscription);

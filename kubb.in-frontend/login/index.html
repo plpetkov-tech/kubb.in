@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Vue.js Login</title>
+<title>Kubb.in Login</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
@@ -15,7 +15,8 @@
   <div id="login">
     <div id="description">
       <h1>Kubb.in</h1>
-      <p>By logging in you agree to the ridiculously long terms that you didn't bother to read.</p>
+      <p>By logging in you agree to the ridiculously long terms that you didn't bother to read. If you don't have an
+        account register <a href="register.html">here</a></p>
     </div>
     <div id="form">
       <form @submit.prevent="doLogin">
@@ -38,7 +39,8 @@
     data: {
       username: '',
       password: '',
-      hidePassword: true
+      hidePassword: true,
+      jsonRequest: {},
     },
     computed: {
       passwordType() {
@@ -50,8 +52,35 @@
     },
     methods: {
       doLogin() {
-        alert('Not implemented yet :O')
+        sendLoginRequest(`${username.value}`, `${password.value}`)
       }
     }
   })
+
+  function sendLoginRequest(u, p) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({ "username": u, "password": p });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://supersonic:8080/api/auth/signin", requestOptions)
+      .then(response => response.json())
+      .then(result => redirectWithToken(result))
+      .catch(error => console.log('error', error));
+  }
+
+  function redirectWithToken(token) {
+    console.log(token);
+    if (token !== undefined) {
+      localStorage.setItem("user", JSON.stringify(token));
+      window.location.href = "/main-page/main.html";
+    }
+  }
+
 </script>
