@@ -47,7 +47,7 @@ const processData = (d)=> {
        redirect: "follow",
      };
 
-     fetch("https://localhost:8080/api/subscriptions/", requestOptions)
+     fetch("https://kubb.in:8080/api/subscriptions/", requestOptions)
        .then((response) => response.json())
        .then((result) => processData(result))
        .catch((error) => console.log("error", error));
