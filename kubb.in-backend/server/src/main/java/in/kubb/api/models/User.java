@@ -1,15 +1,19 @@
 package in.kubb.api.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @Document(collection = "users")
 public class User {
@@ -28,6 +32,8 @@ public class User {
   @NotBlank
   @Size(max = 120)
   private String password;
+  
+  private List<Subscription> subscriptions;
 
   @DBRef
   private Set<Role> roles = new HashSet<>();
@@ -80,4 +86,50 @@ public class User {
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
   }
+
+  public List<Subscription> getSubscriptions() {
+    return subscriptions;
+  }
+  public void setSubscriptions(List<Subscription> subscriptions) {
+    List<Subscription> lSubscriptions = new ArrayList<>();
+    lSubscriptions.addAll(subscriptions);
+    this.subscriptions = lSubscriptions;
+}
+  public void setSubscription(Subscription subscription) {
+    List<Subscription> lSubscriptions = new ArrayList<>();
+    lSubscriptions.add(subscription);
+    this.subscriptions = lSubscriptions;;
+}
+  public void putSubscriptions(List<Subscription> subscriptions) {
+    List<Subscription> lSubscriptions = this.subscriptions;
+    lSubscriptions.addAll(subscriptions);
+}
+  public void putSubscription(Subscription subscription) {
+    List<Subscription> lSubscriptions = this.subscriptions;
+    lSubscriptions.add(subscription);
+}
+
+public Subscription findOneSub(String id2) {
+  Subscription sub = this.subscriptions.stream().filter((Subscription s )-> s.getId().equals(id2)).findAny().get();
+	return sub;
+}
+
+public Long countSubs() {
+	return (long) this.subscriptions.size();
+}
+
+public void deleteSub(String id2) {
+this.subscriptions.removeIf((Subscription s) -> s.getId().equals(new ObjectId(id2)));
+}
+
+public void deleteSubs(List<String> listIds) {
+  listIds.forEach((String id)-> this.subscriptions.removeIf((Subscription s) -> s.getId().equals(new ObjectId(id))));
+}
+
+public void deleteSubs() {
+  this.subscriptions.clear();
+}
+
+
+
 }

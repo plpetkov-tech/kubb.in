@@ -3,6 +3,8 @@ package in.kubb.api.models;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.annotation.processing.Generated;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -13,7 +15,7 @@ import org.bson.types.ObjectId;
 @JsonInclude(Include.NON_NULL)
 public class Subscription {
     @JsonSerialize(using = ToStringSerializer.class)
-    private ObjectId id;
+    private ObjectId id=new ObjectId();;
 
     private String name;
     private String currency;
@@ -83,8 +85,8 @@ public class Subscription {
         return id;
     }
 
-    public void setId(ObjectId id) {
-        this.id = id;
+    public void setId() {
+        this.id = new ObjectId();
     }
     
 }

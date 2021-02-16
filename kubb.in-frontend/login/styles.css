@@ -88,6 +88,24 @@ div#app div#login div#form button:hover {
   background-color: #eeeeee;
 }
 
+a {
+  text-decoration: none;
+  color: #95a5a6;
+}
+
+a:visited { 
+  text-decoration: none; 
+  color: #95a5a6; 
+ }
+
+
+.error {
+  color: red;
+  margin: 0;
+  display: none;
+  transition: 1s ease-in-out;
+}
+
 @media screen and (max-width: 600px) {
   div#app div#login {
     align-items: unset;
