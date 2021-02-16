@@ -92,7 +92,7 @@
             redirect: 'follow'
         };
 
-        fetch("http://supersonic:8080/api/auth/signup", requestOptions)
+        fetch("https://localhost:8080/api/auth/signup", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
