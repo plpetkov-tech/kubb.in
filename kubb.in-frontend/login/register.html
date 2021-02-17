@@ -17,6 +17,7 @@
             <h1>Kubb.in</h1>
             <p>By registering, you are willing to save time and be more organized as you will have complete control over
                 your micro transactions that come from subscriptions and renewals</p>
+                <p><a href="/kubb.in-frontend/login/index.html">To the login page</a></p>
         </div>
         <div id="form">
             <form @submit.prevent="doRegister">
@@ -94,7 +95,7 @@
 
         fetch("https://kubb.in:8080/api/auth/signup", requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
+            .then(result => window.location.href = '/kubb.in-frontend/login/index.html')
             .catch(error => console.log('error', error));
     }
 
