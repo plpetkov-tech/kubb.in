@@ -41,7 +41,15 @@
       password: '',
       hidePassword: true,
       jsonRequest: {},
+      user:localStorage.getItem("user"),
     },
+  created(){
+    if(this.user != null){
+      if(this.user.includes('ROLE_USER')){
+        window.location.href = '/kubb.in-frontend/main-page/main.html'
+      }
+    }
+  },
     computed: {
       passwordType() {
         return this.hidePassword ? 'password' : 'text'
@@ -53,9 +61,14 @@
     methods: {
       doLogin() {
         sendLoginRequest(`${username.value}`, `${password.value}`)
+      },
+      checkIfLogged(){
+        console.log('jsontoken ',data.user)
       }
     }
   })
+
+
 
   function sendLoginRequest(u, p) {
     var myHeaders = new Headers();
