@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Subscription</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">
+        <img class="mr-3" src="./photodark.png" alt="" width="48" height="48" />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/main-page/main.html"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="logout()" href="/login/index.html">Log out</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Subscription actions
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="./newsub.html"
+                >Add a new Subscription</a
+              >
+              <a class="dropdown-item" onclick="deleteAllSubs()">Delete all Subscriptions</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Alpha Version</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+    </nav>
+    <main role="main" class="container">
+      <div class="logo p-3 my-3 rounded box-shadow">
+        <div class="lh-100">
+          <h6 class="mb-0 text-black lh-100">Kubb.in</h6>
+          <small>Saving you time and money since 2021</small>
+        </div>
+      </div>
+      <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h2 class="titleAdd">Add a new Subscription</h2>
+        <form id="newsub">
+          <div class="form-group rounded box-shadow">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="form-group rounded box-shadow">
+            <label for="site">Website</label>
+            <input type="text" name="site" id="site" />
+
+          </div>
+          <div class="form-group rounded box-shadow">
+            <label for="price">Price</label>
+            <input type="text" name="price" id="price" />
+
+          </div>
+          <div class="form-group rounded box-shadow">
+            <label for="currency">Currency</label>
+            <input type="text" name="currency" id="currency" />
+          </div>
+          <div class="form-group rounded box-shadow">
+            <label for="regularity">Regularity</label>
+            <input type="text" name="regularity" id="regularity" />
+          </div>
+          <div class="form-group rounded box-shadow">
+            <label for="renewal">Date of next Renewal</label>
+            <input type="date" name="renewal" id="renewal" />
+          </div>
+          <div class="form-group rounded box-shadow">
+            <label for="autorenewal">Auto Renewal?</label>
+            <input type="text" name="autorenewal" id="autorenewal" />
+          </div>
+        </div>
+         
+        <button type="button" id="submitBtn" class="btn btn-secondary btn-lg">Add</button>
+
+
+
+        </form>
+
+      </div>
+
+      <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h2 class="titleAdd">Your subscriptions</h2>
+        <table class="table table-light table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Website</th>
+              <th scope="col">Price</th>
+              <th scope="col">Currency</th>
+              <th scope="col">Regularity</th>
+              <th scope="col">Next Renewal</th>
+              <th scope="col">Auto Renewal</th>
+            </tr>
+          </thead>
+          <tbody id="table-data">
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
+
+  <script src="script.js"></script>
+</html>

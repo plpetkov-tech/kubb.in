@@ -1,3 +1,9 @@
+window.addEventListener('load',()=>{
+  if(tokenJSON == undefined || tokenJSON == null){
+      window.location.href = '/login/index.html'
+  }
+})
+
 const processData = (d)=> {
    const table = document.getElementById('table-data');
    const header = document.getElementById('header-table');
@@ -54,3 +60,28 @@ const processData = (d)=> {
    };
 
    sendRequestForSubscriptions(tokenJSON.accessToken);  
+
+   const deleteAllSubs = () => {
+    let resp = prompt("Are You Sure? Type yes to continue");
+
+    if (resp.toLowerCase() === 'yes' ) {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${tokenJSON.accessToken}`);
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch("https://kubb.in:8080/api/subscriptions/", requestOptions)
+            .then(response => response.text())
+            .then(result => window.location.reload())
+            .catch(error => console.log('error', error));
+    }
+}
+
+const logout = ()=>{
+  localStorage.removeItem('user');
+}
+
