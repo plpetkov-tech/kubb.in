@@ -71,7 +71,7 @@
 
     fetch("https://kubb.in:8080/api/auth/signin", requestOptions)
       .then(response => response.json())
-      .then(result => redirectWithToken(result))
+      .then(result => result.error ? console.log('wrong password todo') : redirectWithToken(result))
       .catch(error => console.log('error', error));
   }
 
