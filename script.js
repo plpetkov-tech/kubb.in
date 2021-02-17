@@ -10,4 +10,4 @@ toggle.addEventListener('click', ()=>
 );
 
 
-open.addEventListener('click', ()=> window.location.href = './kubb.in-frontend/login/register.html');
+open.addEventListener('click', ()=> window.location.href = '/kubb.in-frontend/login/register.html');

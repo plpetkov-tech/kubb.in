@@ -1,6 +1,6 @@
 window.addEventListener('load',()=>{
   if(tokenJSON == undefined || tokenJSON == null){
-      window.location.href = '/login/index.html'
+      window.location.href = '/kubb.in-frontend/login/index.html'
   }
 })
 
