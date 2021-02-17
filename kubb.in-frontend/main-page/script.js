@@ -35,7 +35,7 @@ const processData = (d)=> {
        cellcurr .innerText = element.currency;
        cellreg.innerText = element.regularity;
        cellnr.innerText = element.nextRenewal.split('T')[0];
-       cellar.innerText = element.autoRenewal;
+       cellar.innerText = element.autoRenewal === 'true' ? 'Yes' : 'No';
 
        row.append(cellname,celllink,cellpri,cellcurr,cellreg,cellnr,cellar);
        table.appendChild(row)

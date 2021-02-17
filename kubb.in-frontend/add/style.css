@@ -3,7 +3,9 @@ body {
   line-height: 1.25;
   background-color: #fafafa;
 }
-
+.alert {
+  margin: 15px;
+}
 #newsub ,.form-group{
   display: flex;
   flex-direction: column;
@@ -12,7 +14,10 @@ body {
   width: 100%;
 
 }
-input{
+
+
+
+input, select{
   width: 40%;
 }
 #submitBtn{
@@ -85,7 +90,7 @@ table th {
 
 table td img { text-align: center; }
 @media screen and (max-width: 770px) {
-  input{
+  input, select{
     width: 90%;
   }
 table { border: 0; }
@@ -121,7 +126,7 @@ table td:before {
 table td:last-child { border-bottom: 0; }
 }
 @media screen and (min-width: 770px) and (max-width: 995px)  {
-  input{
+  input, select{
     width: 70%;
   }
   .table-responsive {

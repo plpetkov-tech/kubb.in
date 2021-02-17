@@ -1,8 +1,8 @@
-window.addEventListener('load',()=>{
-    if(tokenJSON == undefined || tokenJSON == null){
+window.addEventListener('load', () => {
+    if (tokenJSON == undefined || tokenJSON == null) {
         window.location.href = '/kubb.in-frontend/login/index.html'
     }
-  })
+})
 
 const form = document.getElementById('newsub');
 let subname = document.getElementById('name');
@@ -54,7 +54,7 @@ const processData = (d) => {
         cellcurr.innerText = element.currency;
         cellreg.innerText = element.regularity;
         cellnr.innerText = element.nextRenewal.split('T')[0];
-        cellar.innerText = element.autoRenewal;
+        cellar.innerText = element.autoRenewal === 'true' ? 'Yes' : 'No';
 
         row.append(cellname, celllink, cellpri, cellcurr, cellreg, cellnr, cellar);
         table.appendChild(row)
@@ -83,36 +83,40 @@ sendRequestForSubscriptions(tokenJSON.accessToken);
 
 const submitBtn = document.getElementById('submitBtn');
 submitBtn.addEventListener('click', (e) => {
+    //showAlert(price)
     sendRequestAddNewSubscription(tokenJSON.accessToken, getFormObj());
 })
 
 
 const sendRequestAddNewSubscription = (token, sub) => {
 
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/json");
+    let izmislica = validateSub(sub);
+    if (izmislica) {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({ "autoRenewal": `${sub.autorenewal}`, "currency": `${sub.currency}`, "link": `${sub.site}`, "name": `${sub.name}`, "nextRenewal": `${sub.nextrenewal}`, "price": `${sub.price}`, "regularity": `${sub.regularity}` });
+        var raw = JSON.stringify({ "autoRenewal": `${sub.autorenewal}`, "currency": `${sub.currency}`, "link": `${sub.site}`, "name": `${sub.name}`, "nextRenewal": `${sub.nextrenewal}`, "price": `${sub.price}`, "regularity": `${sub.regularity}` });
 
-    var requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
 
-    fetch("https://kubb.in:8080/api/subscription/", requestOptions)
-        .then(response => response.text())
-        .then(result => window.location.reload())
-        .catch(error => console.log('error', error));
+        fetch("https://kubb.in:8080/api/subscription/", requestOptions)
+            .then(response => response.text())
+            .then(result => window.location.reload())
+            .catch(error => console.log('error', error));
+    }
 }
 
 
 const deleteAllSubs = () => {
     let resp = prompt("Are You Sure? Type yes to continue");
 
-    if (resp.toLowerCase() === 'yes' ) {
+    if (resp.toLowerCase() === 'yes') {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${tokenJSON.accessToken}`);
 
@@ -128,6 +132,65 @@ const deleteAllSubs = () => {
             .catch(error => console.log('error', error));
     }
 }
-const logout = ()=>{
+const logout = () => {
     localStorage.removeItem('user');
-  }
+}
+
+const showAlert = (alert) => {
+    const alertParent = alert.parentElement;
+    const alertEle = document.createElement('div');
+    alertEle.innerText = 'Wrong input, please introduce valid data';
+    alertEle.className = 'alert alert-danger fade show';
+    alertParent.insertBefore(alertEle, alert.parentElement.children[0]);
+    console.log(alertEle);
+
+    setTimeout(closeAlert, 2500)
+
+}
+
+const closeAlert = () => {
+    $('.alert').alert('close')
+}
+
+const validateSub = (sub) => {
+
+        //name is not empty or null
+        if (sub.name == '' || sub.name == null || sub.name == undefined) {
+            showAlert(subname)
+            
+            return false;
+
+        }
+        //price is only numbers
+        if ( /[0-9]{1,}/.test(sub.price) != true || (sub.price == null || sub.price == undefined)) {
+            showAlert(price)
+            
+            return false;
+
+        }
+        //currency is only letters
+        if (sub.currency == '' || sub.currency == null || sub.currency == undefined) {
+            showAlert(currency)
+            
+            return false;
+
+        }
+        //regularity is only letters
+        if (sub.regularity == '' || sub.regularity == null || sub.regularity == undefined) {
+            showAlert(regularity)
+            
+            return false;
+
+        }
+        //autorenewal is true or false
+        console.log(sub.autorenewal)
+        if ((sub.autorenewal != 'true' && sub.autorenewal != 'false' )||sub.autorenewal == null || sub.autorenewal == undefined) {
+            showAlert(autorenewal)
+            
+            return false;
+        }
+        return true;
+    
+
+
+}
