@@ -21,9 +21,7 @@
       <ul>
         <li><a href="#">Home</a></li>
         <li>
-          <a href="/main"
-            >To the application</a
-          >
+          <a href="/main">To the application</a>
         </li>
         <li><a href="#">Contact</a></li>
         <li><a href="https://plamenpetkovonline.com">The creator</a></li>
@@ -49,6 +47,8 @@ export default {
     };
   },
   mounted() {
+    window.$ = require("jquery");
+
     toggle.addEventListener("click", () =>
       document.body.classList.toggle("show-nav")
     );

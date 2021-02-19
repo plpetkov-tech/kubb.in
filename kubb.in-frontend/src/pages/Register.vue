@@ -1,12 +1,9 @@
 <template>
+<ClientOnly>
   <div>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Nunito"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
     />
     <link rel="stylesheet" href="login.css" />
     <div id="login">
@@ -45,11 +42,10 @@
           <p class="error" id="passwordErr">error</p>
 
           <label for="password">Password</label>
-          <i
-            class="fas"
-            :class="[passwordIcon]"
-            @click="hidePassword = !hidePassword"
-          ></i>
+           <font-awesome-icon
+             :icon='passwordIcon'
+            @click="hidePassword()"
+          ></font-awesome-icon>
           <input
             :type="passwordType"
             id="password"
@@ -58,11 +54,10 @@
           />
           <p class="error" id="cpasswordErr">error</p>
           <label for="cpassword">Confirm Password</label>
-          <i
-            class="fas"
-            :class="[passwordIcon]"
-            @click="hidePassword = !hidePassword"
-          ></i>
+          <font-awesome-icon
+            :icon='passwordIcon'
+            @click="hidePassword()"
+          ></font-awesome-icon>
           <input
             :type="passwordType"
             id="cpassword"
@@ -75,6 +70,7 @@
       </div>
     </div>
   </div>
+  </ClientOnly>
 </template>
 
 <script>
@@ -82,24 +78,26 @@ export default {
   metaInfo: {
     title: "Register with us",
   },
+  mounted() {
+    if (typeof window !== `undefined`) {
+    window.$ = require("jquery");
+    }
+  },
   data() {
     return {
+      passwordType:'password',
       username: "",
       password: "",
       email: "",
       cpassword: "",
-      hidePassword: true,
+      passwordIcon:'eye'
     };
   },
-  computed: {
-    passwordType() {
-      return this.hidePassword ? "password" : "text";
-    },
-    passwordIcon() {
-      return this.hidePassword ? "fa-eye" : "fa-eye-slash";
-    },
-  },
   methods: {
+    hidePassword(){
+      this.passwordType == 'text' ? this.passwordType = 'password'  : this.passwordType = 'text'
+      this.passwordIcon == 'eye' ? this.passwordIcon = 'eye-slash' : this.passwordIcon = 'eye'
+      },
     doRegister() {
       doRegistration(
         `${username.value}`,

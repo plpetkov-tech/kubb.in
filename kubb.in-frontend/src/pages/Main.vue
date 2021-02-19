@@ -33,11 +33,9 @@
           I'm amazed to announce that the alpha version is working correctly
         </p>
       </div>
-     
+
       <small class="d-block text-right mt-3">
-        <a href="#"
-          >All updates</a
-        >
+        <a href="#">All updates</a>
       </small>
     </div>
   </Layout>
@@ -55,12 +53,40 @@ export default {
   },
   data() {
     return {
-      user: localStorage.getItem("user"),
-      tokenJSON: JSON.parse(user),
+      test: "test",
     };
   },
   mounted() {
-    sendRequestForSubscriptions(tokenJSON.accessToken);
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("user");
+      const tokenJSON = JSON.parse(user);
+      if (tokenJSON !== null) {
+        sendRequestForSubscriptions(tokenJSON.accessToken);
+      } else {
+        window.location.href = '/login'
+      }
+      const deleteAllSubs = () => {
+        let resp = prompt("Are You Sure? Type yes to continue");
+        let token = JSON.parse(localStorage.getItem("user"));
+        if (resp.toLowerCase() === "yes") {
+          var myHeaders = new Headers();
+          myHeaders.append("Authorization", `Bearer ${token.accessToken}`);
+
+          var requestOptions = {
+            method: "DELETE",
+            headers: myHeaders,
+            redirect: "follow",
+          };
+
+          fetch("https://kubb.in:8080/api/subscriptions/", requestOptions)
+            .then((response) => response.text())
+            .then((result) => window.location.reload())
+            .catch((error) => console.log("error", error));
+        }
+      };
+      
+      
+    }
   },
   methods: {
     logout() {
@@ -69,12 +95,6 @@ export default {
     },
   },
 };
-
-window.addEventListener("load", () => {
-  if (tokenJSON == undefined || tokenJSON == null) {
-    window.location.href = "/login";
-  }
-});
 
 const processData = (d) => {
   const table = document.getElementById("table-data");
@@ -118,8 +138,7 @@ const processData = (d) => {
     table.appendChild(row);
   });
 };
-const user = localStorage.getItem("user");
-const tokenJSON = JSON.parse(user);
+
 const sendRequestForSubscriptions = (token) => {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -134,25 +153,5 @@ const sendRequestForSubscriptions = (token) => {
     .then((response) => response.json())
     .then((result) => processData(result))
     .catch((error) => console.log("error", error));
-};
-
-const deleteAllSubs = () => {
-  let resp = prompt("Are You Sure? Type yes to continue");
-
-  if (resp.toLowerCase() === "yes") {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${tokenJSON.accessToken}`);
-
-    var requestOptions = {
-      method: "DELETE",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch("https://kubb.in:8080/api/subscriptions/", requestOptions)
-      .then((response) => response.text())
-      .then((result) => window.location.reload())
-      .catch((error) => console.log("error", error));
-  }
 };
 </script>

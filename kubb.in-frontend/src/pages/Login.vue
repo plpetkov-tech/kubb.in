@@ -60,15 +60,28 @@ export default {
       password: "",
       hidePassword: true,
       jsonRequest: {},
-      user: localStorage.getItem("user"),
+
     };
   },
-  created() {
-    if (this.user != null) {
-      if (this.user.includes("ROLE_USER")) {
+  mounted() {
+if (typeof window !== `undefined`) {
+  const user = localStorage.getItem("user");
+  const tokenJSON = JSON.parse(user);
+      if (user != null) {
+      if (user.includes("ROLE_USER")) {
         window.location.href = "/main";
       }
     }
+  const redirectWithToken = (token) =>{
+  if (token !== undefined) {
+    localStorage.setItem("user", JSON.stringify(token));
+    window.location.href = "/main";
+  }
+}
+
+
+
+}
   },
   computed: {
     passwordType() {
@@ -80,13 +93,23 @@ export default {
   },
   methods: {
     doLogin() {
-      sendLoginRequest(`${username.value}`, `${password.value}`);
+      if(typeof window !== 'undefined'){
+        sendLoginRequest(`${username.value}`, `${password.value}`);
+      }
     },
     checkIfLogged() {
       console.log("jsontoken ", data.user);
     },
   },
 };
+const redirectWithToken = (token) =>{
+  if(typeof window !== 'undefined'){
+      if (token !== undefined) {
+    localStorage.setItem("user", JSON.stringify(token));
+    window.location.href = "/main";
+  }
+  }
+}
 function sendLoginRequest(u, p) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -107,12 +130,5 @@ function sendLoginRequest(u, p) {
         : redirectWithToken(result)
     )
     .catch((error) => console.log("error", error));
-}
-
-function redirectWithToken(token) {
-  if (token !== undefined) {
-    localStorage.setItem("user", JSON.stringify(token));
-    window.location.href = "/main";
-  }
 }
 </script>

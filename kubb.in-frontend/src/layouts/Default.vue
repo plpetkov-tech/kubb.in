@@ -21,11 +21,11 @@
       <ul>
         <li><a href="/">Home</a></li>
         <li>
-          <a href="/login"
-            >To the application</a
-          >
+          <a href="/login">To the application</a>
         </li>
-        <li><a href="https://www.plamenpetkovonline.com/#contact">Contact</a></li>
+        <li>
+          <a href="https://www.plamenpetkovonline.com/#contact">Contact</a>
+        </li>
         <li><a href="https://plamenpetkovonline.com">The creator</a></li>
       </ul>
     </nav>
@@ -38,7 +38,9 @@
 
       <p>Manage your subscriptions and renewals from one place!</p>
 
-      <button class="cta-btn" @click="goToRegistration()" id="open">Sign Up!</button>
+      <button class="cta-btn" @click="goToRegistration()" id="open">
+        Sign Up!
+      </button>
     </header>
     <slot />
   </div>
@@ -53,27 +55,23 @@ query {
 </static-query>
 <script>
 export default {
-  methods:{
-   goToRegistration : ()=> {
-  window.location.href = '/register'
-}
-  },
   data() {
-    return {
-      toggle: document.getElementById("toggle"),
-      close: document.getElementById("close"),
-      open: document.getElementById("open"),
-      modal: document.getElementById("modal"),
-    };
+    return {};
   },
   mounted() {
+    window.$ = require("jquery");
+      const toggle = document.getElementById("toggle");
+      const close = document.getElementById("close");
+      const open = document.getElementById("open");
+      const modal = document.getElementById("modal");
+    const goToRegistration = () => {
+      window.location.href = "/register";
+    };
     toggle.addEventListener("click", () =>
       document.body.classList.toggle("show-nav")
     );
   },
 };
-
-
 </script>
 <style>
 body {

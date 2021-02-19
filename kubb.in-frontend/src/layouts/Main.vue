@@ -81,25 +81,39 @@
   </body>
 </template>
 <script>
+import "bootstrap/dist/css/bootstrap.min.css";
 export default {
+  mounted() {
+    if (typeof window !== `undefined`) {
+      window.$ = require("jquery");
+      require("bootstrap");
+      const user = localStorage.getItem("user");
+      const tokenJSON = JSON.parse(user);
+      
+    
+    }
+  },
   methods: {
     deleteAllSubs: () => {
-      let resp = prompt("Are You Sure? Type yes to continue");
-      if (resp&&resp.toLowerCase() === "yes") {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${tokenJSON.accessToken}`);
+      if(typeof window !== 'undefined'){
+        let resp = prompt("Are You Sure? Type yes to continue");
+        let token = JSON.parse(localStorage.getItem("user"));
+        if (resp.toLowerCase() === "yes") {
+          var myHeaders = new Headers();
+          myHeaders.append("Authorization", `Bearer ${token.accessToken}`);
 
-        var requestOptions = {
-          method: "DELETE",
-          headers: myHeaders,
-          redirect: "follow",
-        };
+          var requestOptions = {
+            method: "DELETE",
+            headers: myHeaders,
+            redirect: "follow",
+          };
 
-        fetch("https://kubb.in:8080/api/subscriptions/", requestOptions)
-          .then((response) => response.text())
-          .then((result) => window.location.reload())
-          .catch((error) => console.log("error", error));
-      }
+          fetch("https://kubb.in:8080/api/subscriptions/", requestOptions)
+            .then((response) => response.text())
+            .then((result) => window.location.reload())
+            .catch((error) => console.log("error", error));
+        }
+      }      
     },
     logout: () => {
       localStorage.removeItem("user");
@@ -107,8 +121,11 @@ export default {
     },
   },
 };
-const user = localStorage.getItem("user");
-const tokenJSON = JSON.parse(user);
+
+if (typeof window !== `undefined`) {
+  const user = localStorage.getItem("user");
+  const tokenJSON = JSON.parse(user);
+}
 </script>
 <style>
 </style>
