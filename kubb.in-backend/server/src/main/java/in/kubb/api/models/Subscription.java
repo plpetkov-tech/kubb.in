@@ -25,6 +25,12 @@ public class Subscription {
     private boolean autoRenewal;
     private String link;
 
+    public Subscription createNewWithId(String id){
+        Subscription n = new Subscription();
+        n.setId(new ObjectId(id));
+        return n;
+    }
+
     public String getName() {
         return name;
     }
@@ -88,5 +94,8 @@ public class Subscription {
     public void setId() {
         this.id = new ObjectId();
     }
+
+	public void setId(ObjectId objectId) {
+	}
     
 }

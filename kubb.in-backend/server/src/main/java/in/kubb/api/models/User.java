@@ -96,7 +96,7 @@ public class User {
     this.subscriptions = lSubscriptions;
 }
   public void setSubscription(Subscription subscription) {
-    List<Subscription> lSubscriptions = new ArrayList<>();
+    List<Subscription> lSubscriptions = getSubscriptions();
     lSubscriptions.add(subscription);
     this.subscriptions = lSubscriptions;;
 }
@@ -109,10 +109,6 @@ public class User {
     lSubscriptions.add(subscription);
 }
 
-public Subscription findOneSub(String id2) {
-  Subscription sub = this.subscriptions.stream().filter((Subscription s )-> s.getId().equals(id2)).findAny().get();
-	return sub;
-}
 
 public Long countSubs() {
 	return (long) this.subscriptions.size();
