@@ -185,7 +185,6 @@ public class SubscriptionController {
         matched.setLink(subscription.getLink());
         matched.setName(subscription.getName());
         matched.setRegularity(subscription.getRegularity());
-        userExist.setSubscription(matched);
         userRepository.save(userExist);
         return ResponseEntity.ok(matched);
 
