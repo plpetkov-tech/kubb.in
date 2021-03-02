@@ -1,19 +1,34 @@
 <template>
   <div>
-     <div class="my-3 p-3 bg-white rounded box-shadow">
-      <h2 class="titleAdd">Add a new Subscription</h2>
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+      <h2 class="titleAdd">Edit a Subscription</h2>
       <form id="newsub">
         <div class="form-group rounded box-shadow">
           <label for="name">Name</label>
-          <input v-model="subscription.name" type="text" name="name" id="name" />
+          <input
+            v-model="subscription.name"
+            type="text"
+            name="name"
+            id="name"
+          />
         </div>
         <div class="form-group rounded box-shadow">
           <label for="site">Website</label>
-          <input v-model="subscription.link" type="text" name="site" id="site" />
+          <input
+            v-model="subscription.link"
+            type="text"
+            name="site"
+            id="site"
+          />
         </div>
         <div class="form-group rounded box-shadow">
           <label for="price">Price</label>
-          <input v-model="subscription.price" type="text" name="price" id="price" />
+          <input
+            v-model="subscription.price"
+            type="text"
+            name="price"
+            id="price"
+          />
         </div>
         <div class="form-group rounded box-shadow">
           <label for="currency">Currency</label>
@@ -103,10 +118,10 @@
     <button
       type="button"
       id="submitBtn"
-      @click="sendRequestAddNewSubscription()"
+      @click="sendRequestEditSubscription()"
       class="btn btn-secondary btn-lg"
     >
-      Add
+      Edit
     </button>
 
     <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -133,22 +148,24 @@ import { Component, Vue } from "vue-property-decorator";
 import UserService from "@/services/UserService";
 
 @Component
-export default class Add extends Vue {
-    private subscription = {
-        name: '',
-        link: '',
-        price: '',
-        currency: '',
-        regularity: '',
-        nextRenewal: '',
-        autoRenewal: ''
-    }
-    sendRequestAddNewSubscription(){
-        UserService.postOneSubscription(this.subscription).then((data)=>{
-           this.$router.go(0)
-           
-        })
-    }
+export default class Edit extends Vue {
+  private subscription = {
+    name: "",
+    link: "",
+    price: "",
+    currency: "",
+    regularity: "",
+    nextRenewal: "",
+    autoRenewal: "",
+  };
+  private rid = this.$route.params.id;
+  sendRequestEditSubscription() {
+    UserService.editOneSubscription(this.rid, this.subscription).then(
+      (data) => {
+        this.$router.push("/main");
+      }
+    );
+  }
   readData(
     data: {
       name: string;
@@ -234,6 +251,15 @@ export default class Add extends Vue {
         );
       }
     );
+    UserService.getOneSub(this.rid).then((data) => {
+      this.subscription.name = data.data.name;
+      this.subscription.currency = data.data.currency;
+      this.subscription.regularity = data.data.regularity;
+      this.subscription.nextRenewal = data.data.nextRenewal.split('T')[0];
+      this.subscription.autoRenewal = data.data.autoRenewal;
+      this.subscription.price = data.data.price;
+      this.subscription.link = data.data.link;
+    });
   }
 }
 </script>

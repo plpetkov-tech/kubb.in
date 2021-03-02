@@ -32,7 +32,7 @@ public class SpringConfiguration {
     public MongoClient mongoClient() {
         MongoCredential credential = currentEnvironmentIsProd == false ? MongoCredential.createCredential("test", "kubbin-test", "test".toCharArray()) : MongoCredential.createCredential("admin", "kubbin", dbPass.toCharArray());
         if(currentEnvironmentIsProd == false){
-            connectionString = connectionString.concat(":27018");
+            connectionString = connectionString.concat(":27017");
         } else {
             connectionString =  connectionString.concat(":27017");
         }

@@ -11,6 +11,8 @@
             <th scope="col">Regularity</th>
             <th scope="col">Next Renewal</th>
             <th scope="col">Auto Renewal</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody id="table-data"></tbody>
@@ -43,11 +45,27 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import UserService from "@/services/UserService";
+import User from "@/store/modules/auth.module";
+import { namespace } from "vuex-class";
+
+const Auth = namespace("Auth");
 
 @Component
 export default class Main extends Vue {
+  @Auth.State("user")
+  private currentUser!: any;
+
+  @Auth.Action
+  private signOut!: () => void;
+
+  deleteOneSub(subid:any){
+    UserService.deleteOneSub(subid).then((data)=>{
+      this.$router.go(0)
+    });
+  }
   readData(
     data: {
+      id:string;
       name: string;
       link: string;
       price: string;
@@ -67,9 +85,12 @@ export default class Main extends Vue {
       cellnr,
       cellpri,
       cellreg,
+      celledit,
+      celldelete,
       headCell;
     data.forEach(
       (element: {
+        id:string;
         name: string;
         link: string;
         price: string;
@@ -94,6 +115,10 @@ export default class Main extends Vue {
         cellpri.setAttribute("data-label", "Price");
         cellreg = document.createElement("td");
         cellreg.setAttribute("data-label", "Regularity");
+        celledit = document.createElement("td");
+        celledit.setAttribute("data-label", "Edit");
+        celldelete = document.createElement("td");
+        celldelete.setAttribute("data-label", "Delete");
 
         cellname.innerText = element.name;
         celllink.innerText = element.link;
@@ -103,6 +128,14 @@ export default class Main extends Vue {
         cellnr.innerText = element.nextRenewal.split("T")[0];
         cellar.innerText = element.autoRenewal === "true" ? "Yes" : "No";
 
+        celldelete.innerHTML = `<button class='btn btn-secondary'>Delete</button>`;
+        celldelete.addEventListener('click',()=>{
+          this.deleteOneSub(`${element.id}`)
+        })
+        celledit.innerHTML = "<button class='btn btn-secondary'>Edit</button>";
+        celledit.addEventListener('click',()=>{
+          this.goToEditPage(`${element.id}`)
+        })
         row.append(
           cellname,
           celllink,
@@ -110,13 +143,21 @@ export default class Main extends Vue {
           cellcurr,
           cellreg,
           cellnr,
-          cellar
+          cellar,
+          celledit,
+          celldelete
         );
         if (table) {
           table.appendChild(row);
         }
       }
     );
+  }
+  goToEditPage(arg0: string) {
+    this.$router.push('/edit/'+arg0)
+  }
+  editOneSub(id: string,sub:any) {
+    UserService.editOneSubscription(id,sub).then((data)=>{console.log(data)});
   }
   mounted() {
     UserService.getSubscriptions().then(
@@ -129,8 +170,11 @@ export default class Main extends Vue {
             error.message ||
             error.toString()
         );
+        this.signOut();
+        this.$router.push("/login");
       }
     );
   }
+  
 }
 </script>

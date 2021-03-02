@@ -18,6 +18,7 @@
     "vee-validate": "^2.2.15",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
+    "vue-editable-grid": "^0.3.19",
     "vue-good-table": "^2.21.4",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.4.3",

@@ -43,8 +43,7 @@
               <a class="dropdown-item" @click="deleteAllSubs()"
                 >Delete all Subscriptions</a
               >
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/manage">Manage all Subscriptions</a>
+              
             </div>
           </li>
                     <li class="nav-item dropdown">
@@ -62,10 +61,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
 
-          <router-link v-if="currentUser" to="/profile" class="dropdown-item">
-           
-               <font-awesome-icon icon="user" /> Profile {{ currentUser.username }}
-          </router-link>
+
 
       
           <a v-if="currentUser" class="dropdown-item" href @click.prevent="logOut">
@@ -74,8 +70,10 @@
  
 
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+          <router-link v-if="currentUser" to="/profile" class="dropdown-item">
+           
+               <font-awesome-icon icon="user" /> Profile {{ currentUser.username }}
+          </router-link>            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Alpha Version</a>

@@ -1,0 +1,3 @@
+[submodule "kubbfront"]
+	path = kubbfront
+	url = https://github.com/plpetkov-tech/kubbfront.git

@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  test-mongo:
+    image: "mongo:3"
+    hostname: "mongo"
+    container_name: "test-mongo"
+    environment:
+      - MONGO_INITDB_DATABASE=kubbin-test
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - kubbin-net  
+  api:
+    container_name: api
+    build:
+      context: ./kubb.in-backend/server/
+      dockerfile: ./Dockerfile
+    image: api:latest
+    ports:
+      - 8080:8080
+    networks:
+      - kubbin-net
+    depends_on:
+      - test-mongo
+  front:
+    container_name: front
+    build:
+      context: ./kubbfront/
+      dockerfile: ./Dockerfile
+    image: front:latest
+    ports:
+      - 80:80
+    networks:
+      - kubbin-net  
+networks:
+    kubbin-net:
+        driver: bridge

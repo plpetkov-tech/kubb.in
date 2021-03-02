@@ -1,74 +1,81 @@
-import Vue from 'vue';
+import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Login from '@/components/Login.vue';
-import Register from '@/components/Register.vue';
-import AppLayout from '@/layouts/App.vue'
-import Manage from '@/components/Manage.vue';
+import Login from "@/components/Login.vue";
+import Register from "@/components/Register.vue";
+import AppLayout from "@/layouts/App.vue";
+import Manage from "@/components/Manage.vue";
 
-import FrontPageLayout from '@/layouts/FrontPage.vue'
+import FrontPageLayout from "@/layouts/FrontPage.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
+    path: "/",
     component: FrontPageLayout,
-
   },
   {
-    path: '/login',
-    component: Login
+    path: "/login",
+    component: Login,
   },
   {
-    path: '/register',
-    component: Register
+    path: "/register",
+    component: Register,
   },
   {
-    path: '/profile',
+    path: "/profile",
     component: AppLayout,
     children: [
       {
-        path: '',
-        component: () => import('./components/Profile.vue')
+        path: "",
+        component: () => import("./components/Profile.vue"),
       },
     ],
-    name: 'profile',
+    name: "profile",
     // lazy-loaded
-    
   },
   {
-    path: '/main',
+    path: "/edit/:id",
     component: AppLayout,
     children: [
       {
-        path: '',
-        component: () => import('./components/Main.vue')
+        path: "",
+        component: () => import("./components/Edit.vue"),
       },
     ],
-    name: 'main',
+    name: "edit",
     // lazy-loaded
-    
-  },{
-    path: '/add',
-    component: AppLayout,
-    children: [
-      {
-        path: '',
-        component: () => import('./components/Add.vue')
-      },
-    ],
-    name: 'add',
-    // lazy-loaded
-    
   },
-  
- 
+  {
+    path: "/main",
+    component: AppLayout,
+    children: [
+      {
+        path: "",
+        component: () => import("./components/Main.vue"),
+      },
+    ],
+    name: "main",
+    // lazy-loaded
+  },
+  {
+    path: "/add",
+    component: AppLayout,
+    children: [
+      {
+        path: "",
+        component: () => import("./components/Add.vue"),
+      },
+    ],
+    name: "add",
+    // lazy-loaded
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 // router.beforeEach((to, from, next) => {
@@ -86,5 +93,3 @@ const router = new VueRouter({
 // });
 
 export default router;
-
-
