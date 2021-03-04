@@ -16,7 +16,7 @@ Docker and Docker Compose
 // you need an ssl certificate configured in the backend and front : sorry this are requirements so the prod app can be super secure and modern 👍
 // in the server folder : 
 mvn clean package
-
+// the front folder is my kubbfront repo which need to be cloned in the root of the project as it will need it for the docker compose 
 ```
 
 ### Installing
@@ -53,6 +53,4 @@ docker-compose up --build -d
 
 ## Authors
 
-* **Plamen Petkov** - *Project* - [PlamenPetkov](https://plamenpetkovonline.com/)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Plamen Petkov** - *Project* - [Plamen Petkov](https://plamenpetkovonline.com/)
